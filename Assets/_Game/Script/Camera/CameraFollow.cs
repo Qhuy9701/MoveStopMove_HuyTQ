@@ -6,7 +6,7 @@ public class CameraFollow : MonoBehaviour
     public float smoothSpeed = 0.125f; // tốc độ di chuyển camera
     public Vector3 offset; // khoảng cách giữa camera và player
 
-    void Update()
+    void LateUpdate()
     {
         Vector3 desiredPosition = target.position + offset; // vị trí camera cần đến
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed); // di chuyển camera một cách mượt mà
