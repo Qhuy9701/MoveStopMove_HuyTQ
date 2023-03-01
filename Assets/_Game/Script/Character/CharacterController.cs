@@ -1,43 +1,65 @@
+using System.Collections;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
+    // Reference to the bullet prefab and spawn point transform
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
+
+    // Speed of the bullet
     public float bulletSpeed = 20f;
-    public bool isMoving = false;
+
+    // Flag to check if the player can shoot
     private bool canShoot = true;
 
+    // FixedUpdate is called once per physics update
     private void FixedUpdate()
     {
-        
-        // Check if the character is moving
-        if (GetComponent<Rigidbody>().velocity.magnitude > 0f)
+        // Check if the character is not moving and can shoot
+        if (GetComponent<Rigidbody>().velocity.magnitude <= 0f && canShoot)
         {
-            Debug.Log("Velocity > 0");
-            isMoving = true;
-            canShoot = true;
-        }
-        else if (isMoving && canShoot)
-        {
-            Shoot();
+            // Check for bots within the range
+            Collider[] botColliders = Physics.OverlapSphere(transform.position, 2.56f, LayerMask.GetMask("Bot"));
+
+            // If a bot is found, shoot at it
+            if (botColliders.Length > 0)
+            {
+                Vector3 botPosition = botColliders[0].transform.position;
+                bulletSpawn.LookAt(botPosition);
+                Shoot();
+            }
+
+            // Mark that the player has shot and cannot shoot again until they move
             canShoot = false;
-            isMoving = false;
         }
     }
 
+    // Coroutine to disable bullets after a certain time
+    private IEnumerator DisableBullet(GameObject bullet)
+    {
+        yield return new WaitForSeconds(2f);
+        bullet.SetActive(false);
+    }
+
+    // Method to shoot a bullet
     private void Shoot()
     {
-        // Tạo đạn
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
-        // Thiết lập vận tốc cho đạn
-        Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-        bulletRigidbody.velocity = transform.forward * bulletSpeed;
-        Debug.Log("Shoot");
-    }
+        GameObject bullet = ObjectPooling.instance.GetPoolObject();
 
-    void OnTriggerEnter(Collider other)
-    {
-        
+        if (bullet != null)
+        {
+            bullet.transform.position = bulletSpawn.position;
+            bullet.transform.rotation = bulletSpawn.rotation;
+            bullet.SetActive(true);
+            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
+
+            // Disable the bullet after a certain time
+            StartCoroutine(DisableBullet(bullet));
+        }
+        else
+        {
+            Debug.Log("No available bullets in pool.");
+        }
     }
 }

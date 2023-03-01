@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Range
+  - Character
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Bot
   - Water
   - UI
   - 
