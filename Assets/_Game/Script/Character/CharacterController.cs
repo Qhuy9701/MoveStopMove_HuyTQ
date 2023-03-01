@@ -30,10 +30,14 @@ public class CharacterController : MonoBehaviour
     {
         // Tạo đạn
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
-
         // Thiết lập vận tốc cho đạn
         Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
         bulletRigidbody.velocity = transform.forward * bulletSpeed;
         Debug.Log("Shoot");
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        
     }
 }
