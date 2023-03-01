@@ -10,9 +10,11 @@ public class CharacterController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         // Check if the character is moving
         if (GetComponent<Rigidbody>().velocity.magnitude > 0f)
         {
+            Debug.Log("Velocity > 0");
             isMoving = true;
             canShoot = true;
         }
