@@ -38,7 +38,7 @@ public class CharacterController : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject bullet = ObjectPooling.instance.GetPoolObject();
+        GameObject bullet = BulletPool.instance.GetPoolObject();
         if (bullet != null)
         {
             bullet.transform.position = bulletSpawn.position;

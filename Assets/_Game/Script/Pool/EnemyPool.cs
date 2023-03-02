@@ -1,81 +1,52 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPool : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    public int poolSize = 10;
-    public float minSpawnDistance = 5f;
-    public float maxSpawnDistance = 15f;
+    public static EnemyPool instance;
 
-    public List<GameObject> enemyPool = new List<GameObject>();
-    private int enemyCount = 0;
+    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private int poolSize = 10;
+
+    private List<GameObject> pool = new List<GameObject>();
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     private void Start()
     {
-        // Create a pool of enemies
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject enemy = Instantiate(enemyPrefab, GetRandomSpawnPosition(), Quaternion.identity);
+            GameObject enemy = Instantiate(enemyPrefab);
             enemy.SetActive(false);
-            enemyPool.Add(enemy);
-        }
-
-        // Spawn 10 enemies initially
-        for (int i = 0; i < 10; i++)
-        {
-            SpawnEnemy();
+            pool.Add(enemy);
         }
     }
 
-    private void Update()
+    public GameObject GetPoolObject()
     {
-        // Check if an enemy has been destroyed and respawn a new enemy if necessary
-        if (enemyCount < poolSize)
+        foreach (GameObject enemy in pool)
         {
-            SpawnEnemy();
-        }
-    }
-
-    private void SpawnEnemy()
-    {
-        GameObject enemy = GetEnemy();
-        if (enemy != null)
-        {
-            enemy.SetActive(true);
-            enemyCount++;
-        }
-    }
-
-    public GameObject GetEnemy()
-    {
-        // Find the first inactive enemy in the pool and return it
-        for (int i = 0; i < enemyPool.Count; i++)
-        {
-            if (!enemyPool[i].activeInHierarchy)
+            if (!enemy.activeInHierarchy)
             {
-                return enemyPool[i];
+                return enemy;
             }
         }
-        // If no inactive enemy is found, return null
-        return null;
+
+        GameObject newEnemy = Instantiate(enemyPrefab);
+        newEnemy.SetActive(false);
+        pool.Add(newEnemy);
+        return newEnemy;
     }
 
-    public void ReturnEnemy(GameObject enemy)
+    public void ReturnPoolObject(GameObject enemy)
     {
-        // Deactivate the enemy and move it to a new spawn position before returning it to the pool
         enemy.SetActive(false);
-        enemy.transform.position = GetRandomSpawnPosition();
-        enemyCount--;
-    }
-
-    private Vector3 GetRandomSpawnPosition()
-    {
-        // Get a random position on the map, away from the player
-        Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-        Vector3 spawnDirection = Random.onUnitSphere;
-        spawnDirection.y = 0f;
-        float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
-        return playerPosition + spawnDirection.normalized * spawnDistance;
     }
 }

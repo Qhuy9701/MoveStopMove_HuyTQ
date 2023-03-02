@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPooling : MonoBehaviour
+public class BulletPool : MonoBehaviour
 {
-    public static ObjectPooling instance;
+    public static BulletPool instance;
 
     private List<GameObject> pools = new List<GameObject>();
-    private int amounttoPools = 20;
+    private int amounttoPools = 10;
 
     [SerializeField] private GameObject bulletPrefabs;
     //[SerializeField] private GameObject enemyPrefabs;
