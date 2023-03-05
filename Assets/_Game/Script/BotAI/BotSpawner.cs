@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BotSpawner : MonoBehaviour
 {
@@ -19,23 +18,19 @@ public class BotSpawner : MonoBehaviour
     private void SpawnBots()
     {
         for (int i = 0; i < spawnBatchSize; i++)
-        {
-            // Lấy một bot từ pool
-            GameObject bot = EnemyPool.instance.GetPoolObject();
+        {   //pool
+            //GameObject bot = EnemyPool.instance.GetPoolObject();
 
-            // Kiểm tra xem pool còn đủ bot không
-            if (bot == null)
+            //multiobject pool
+            GameObject newBot = ObjectPool.Instance.SpawnFromPool("Bot", GetRandomSpawnPosition(), Quaternion.identity);
+            if (newBot == null)
             {
+                Debug.LogWarning("Không thể tạo bot mới vì bot pool đã hết");
                 return;
-                Debug.Log("Pool is empty");
             }
-
-            // Đặt vị trí của bot ngẫu nhiên xung quanh người chơi
-            bot.transform.position = GetRandomSpawnPosition();
-            bot.SetActive(true);
-
-            // Thêm bot vào danh sách các bot đã được tạo ra
-            spawnedBots.Add(bot);
+            newBot.transform.position = GetRandomSpawnPosition();
+            newBot.SetActive(true);
+            spawnedBots.Add(newBot);
         }
     }
 
@@ -50,29 +45,28 @@ public class BotSpawner : MonoBehaviour
     }
 
     public void RemoveBot(GameObject bot)
-{
-    // Xóa bot khỏi danh sách các bot đã được tạo ra
-    spawnedBots.Remove(bot);
-
-    // Trả lại bot vào pool
-    bot.SetActive(false);
-    Debug.Log("Bot returned to pool");
-    EnemyPool.instance.ReturnPoolObject(bot);
-
-    // Kiểm tra xem pool có đủ bot không, nếu không thì tạo mới
-    if (spawnedBots.Count < spawnBatchSize)
     {
-        GameObject newBot = EnemyPool.instance.GetPoolObject();
-        if (newBot != null)
+        // Xóa bot khỏi danh sách các bot đã được tạo ra
+        spawnedBots.Remove(bot);
+
+        // Trả lại bot vào pool
+        bot.SetActive(false);
+        ObjectPool.Instance.ReturnToPool("Enemy", bot);
+
+        // Kiểm tra xem pool có đủ bot không, nếu không thì tạo mới
+        if (spawnedBots.Count < spawnBatchSize)
         {
+            GameObject newBot = ObjectPool.Instance.SpawnFromPool("Enemy", GetRandomSpawnPosition(), Quaternion.identity);
+            if (newBot == null)
+            {
+                Debug.LogWarning("Không thể tạo bot mới vì bot pool đã hết");
+                return;
+            }
             newBot.transform.position = GetRandomSpawnPosition();
             newBot.SetActive(true);
             spawnedBots.Add(newBot);
-
         }
     }
-}
-
 
     private void OnDrawGizmosSelected()
     {

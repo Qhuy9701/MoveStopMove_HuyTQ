@@ -5,6 +5,13 @@ public class JoyStickMove : MonoBehaviour
     public DynamicJoystick joystick;  // reference to the dynamic joystick component
     public float speed = 10f;  // character movement speed
 
+    private void Start()
+    {
+        if(joystick==null)
+        {
+            joystick = FindObjectOfType<DynamicJoystick>();
+        }
+    }
     private void Update()
     {
         MovewithJoyStick();
