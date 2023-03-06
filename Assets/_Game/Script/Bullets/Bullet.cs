@@ -34,8 +34,8 @@ public class Bullet : MonoBehaviour
     {
         if (other.CompareTag("Character"))
         {
-            Destroy(other.gameObject);
-            EnemyPool.instance.ReturnPoolObject(other.gameObject);
+            other.gameObject.SetActive(false);
+            ObjectPool.Instance.SpawnFromPool("bullet", transform.position, Quaternion.identity);
             gameObject.SetActive(false);
         }
     }

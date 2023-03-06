@@ -5,21 +5,18 @@ public class BotSpawner : MonoBehaviour
 {
     [SerializeField] private float minSpawnDistance = 5f;
     [SerializeField] private float maxSpawnDistance = 15f;
-    [SerializeField] private int spawnBatchSize = 10;
-    private List<GameObject> spawnedBots = new List<GameObject>();
+    [SerializeField] private int spawnBatchSize = 10;   
+    public List<GameObject> spawnedBots = new List<GameObject>();
 
     private void Start()
     {
-        // Tạo batch đầu tiên của bots
         SpawnBots();
     }
 
-    private void SpawnBots()
+    public void SpawnBots()
     {
         for (int i = 0; i < spawnBatchSize; i++)
-        {   //pool
-            //GameObject newBot = EnemyPool.instance.GetPoolObject();
-
+        {   
             //multiobject pool
             GameObject newBot = ObjectPool.Instance.SpawnFromPool("Bot", GetRandomSpawnPosition(), Quaternion.identity);
             if (newBot == null)
@@ -29,6 +26,7 @@ public class BotSpawner : MonoBehaviour
             }
             newBot.transform.position = GetRandomSpawnPosition();
             newBot.SetActive(true);
+            newBot.name = "Bot " + i;
             spawnedBots.Add(newBot);
         }
     }
