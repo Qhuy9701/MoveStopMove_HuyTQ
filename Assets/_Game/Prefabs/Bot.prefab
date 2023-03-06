@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 139880145089519271}
   - component: {fileID: 2312022033644262149}
   - component: {fileID: 5082173754619026481}
+  - component: {fileID: 3405456818546381556}
   m_Layer: 3
   m_Name: Bot
   m_TagString: Character
@@ -178,13 +179,30 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8059163434843751535}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2563268e8b384046ae8f793de141cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3779583755522250003, guid: aba141932ccbecb46bec43860a236243, type: 3}
   bulletSpawn: {fileID: 8246224105405854942}
+  bulletSpeed: 20
+  isDead: 0
+  isAttack: 0
+--- !u!114 &3405456818546381556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059163434843751535}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a052071182394646a7eafad21e3e8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 0}
+  bulletSpawn: {fileID: 0}
   bulletSpeed: 20
   isDead: 0
   isAttack: 0
