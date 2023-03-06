@@ -37,6 +37,7 @@ public class Bullet : MonoBehaviour
             other.gameObject.SetActive(false);
             ObjectPool.Instance.SpawnFromPool("bullet", transform.position, Quaternion.identity);
             gameObject.SetActive(false);
+            Debug.Log("Hit");
         }
     }
 }

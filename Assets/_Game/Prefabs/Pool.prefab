@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5160441274823370479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5160441274823370477}
+  - component: {fileID: 5160441274823370450}
+  - component: {fileID: 5160441274823370451}
+  - component: {fileID: 5160441274823370448}
+  m_Layer: 0
+  m_Name: Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5160441274823370477
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160441274823370479}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.88, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5160441274823370450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160441274823370479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b53e16c57f8695640b096c2ac2242851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools:
+  - tag: Player
+    prefab: {fileID: 2256224457881826114, guid: 1b7a0f0692f04fb469e2130154285553, type: 3}
+    size: 1
+  - tag: Bot
+    prefab: {fileID: 8059163434843751535, guid: d89e65e5ec15fce40b0368bd57725e83, type: 3}
+    size: 10
+  - tag: Bullet
+    prefab: {fileID: 3779583755522250003, guid: aba141932ccbecb46bec43860a236243, type: 3}
+    size: 10
+--- !u!114 &5160441274823370451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160441274823370479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be0d1a20b41e0b469bf8e6f403d85ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpawnDistance: 5
+  maxSpawnDistance: 15
+  spawnBatchSize: 10
+  respawnDelay: 2
+  spawnedBots: []
+--- !u!114 &5160441274823370448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160441274823370479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8cebf83518f3e47be2591a987e0824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters: []

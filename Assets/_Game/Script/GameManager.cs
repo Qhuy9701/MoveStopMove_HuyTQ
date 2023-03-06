@@ -1,15 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private BotSpawner botSpawner;
+    public List<GameObject> characters = new List<GameObject>();
 
-    private GameObject player;
-
-    private void Awake()
+    public void AddCharacter(GameObject character)
     {
+        characters.Add(character);
+    }
 
+    public void RemoveCharacter(GameObject character)
+    {
+        characters.Remove(character);
+    }
+
+    public List<GameObject> GetCharacters()
+    {
+        return characters;
     }
 }

@@ -6,6 +6,13 @@ public class CameraFollow : MonoBehaviour
     public float smoothSpeed = 0.125f; // tốc độ di chuyển camera
     public Vector3 offset; // khoảng cách giữa camera và player
 
+    void Start()
+    {
+        if(target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+    }
     void LateUpdate()
     {
         Vector3 desiredPosition = target.position + offset; // vị trí camera cần đến
