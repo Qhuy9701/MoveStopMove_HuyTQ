@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class ObjectPool : MonoBehaviour {
+public class ObjectPool : Singleton<ObjectPool>
+{
     [System.Serializable]
     public class Pool {
         public string tag;
@@ -11,8 +12,6 @@ public class ObjectPool : MonoBehaviour {
 
     public List<Pool> pools;
     public Dictionary<string, Queue<GameObject>> poolDictionary;
-
-    public static ObjectPool Instance { get; private set; }
 
     void Start() {
         poolDictionary = new Dictionary<string, Queue<GameObject>>();

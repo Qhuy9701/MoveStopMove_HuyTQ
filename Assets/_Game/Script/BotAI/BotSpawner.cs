@@ -6,7 +6,6 @@ public class BotSpawner : MonoBehaviour
     [SerializeField] private float minSpawnDistance = 5f;
     [SerializeField] private float maxSpawnDistance = 15f;
     [SerializeField] private int spawnBatchSize = 10;
-    [SerializeField] private int maxSpawnedBots = 100;
     private List<GameObject> spawnedBots = new List<GameObject>();
 
     private void Start()
@@ -19,7 +18,7 @@ public class BotSpawner : MonoBehaviour
     {
         for (int i = 0; i < spawnBatchSize; i++)
         {   //pool
-            //GameObject bot = EnemyPool.instance.GetPoolObject();
+            //GameObject newBot = EnemyPool.instance.GetPoolObject();
 
             //multiobject pool
             GameObject newBot = ObjectPool.Instance.SpawnFromPool("Bot", GetRandomSpawnPosition(), Quaternion.identity);
