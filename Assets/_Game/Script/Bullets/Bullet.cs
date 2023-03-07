@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifetime = 2f;
+    CharacterSpawner characterSpawner;
 
     private Rigidbody rb;
 

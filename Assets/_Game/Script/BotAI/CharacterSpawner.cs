@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class CharacterSpawner : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class CharacterSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnBots()
+    public void SpawnBots()
     {
         for (int i = 0; i < spawnBatchSize; i++)
         {
@@ -36,10 +37,11 @@ public class CharacterSpawner : MonoBehaviour
                 bot.SetActive(true);
                 AddCharacter(bot);
             }
+            bot.name = "Bot" + i;
         }
     }
 
-    private Vector3 GetRandomPosition()
+    public Vector3 GetRandomPosition()
     {
         Vector3 position = Vector3.zero;
         bool positionIsValid = false;
@@ -69,6 +71,16 @@ public class CharacterSpawner : MonoBehaviour
 
     public void RemoveCharacter(GameObject character)
     {
+        StartCoroutine(RespawnCharacter(character));
         characters.Remove(character);
+    }
+
+    private IEnumerator RespawnCharacter(GameObject character)
+    {
+        yield return new WaitForSeconds(5f);
+        Vector3 randomPosition = GetRandomPosition();
+        character.transform.position = randomPosition;
+        character.SetActive(true);
+        ObjectPool.Instance.ReturnToPool("Bot", character);
     }
 }
