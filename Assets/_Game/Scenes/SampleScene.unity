@@ -827,6 +827,9 @@ MonoBehaviour:
   - tag: Bullet
     prefab: {fileID: 3779583755522250003, guid: aba141932ccbecb46bec43860a236243, type: 3}
     size: 10
+  - tag: Boomerang
+    prefab: {fileID: 3779583755522250003, guid: b91f1b70d3f56f144b0f6584d44b877d, type: 3}
+    size: 10
 --- !u!114 &1953654497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -842,7 +845,6 @@ MonoBehaviour:
   minSpawnDistance: 5
   maxSpawnDistance: 15
   spawnBatchSize: 10
-  respawnDelay: 2
   spawnedBots: []
 --- !u!114 &1953654498
 MonoBehaviour:

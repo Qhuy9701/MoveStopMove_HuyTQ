@@ -4,64 +4,34 @@
 
     public class CharacterController : MonoBehaviour
     {
-        public GameObject bulletPrefab;
-        public Transform bulletSpawn;
-        public float bulletSpeed = 20f;
-        private bool canShoot = true;
-        public static float rangeshoot = 5f;
-
-        public bool isDead;
-        public bool isAttack;
-
-
-        void Start()
-        {
-
-        }
+        [SerializeField] private Rigidbody rb;
+        [SerializeField] private float speed = 10f;
+        [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private GameObject boomerangPrefab;
+        [SerializeField] private GameObject swordPrefab;
+        [SerializeField] protected Transform attackPoint;
+        [SerializeField] public static float attackRange = 2.5f;
+        [SerializeField] private bool isMoving = false;
+        [SerializeField] private bool isDead = false ;
+        [SerializeField] protected bool isAttack = false;
 
         public virtual void OnInit()
         {
-            isDead = false;
+            rb = GetComponent<Rigidbody>();
+            isMoving = true;
             isAttack = false;
+            isDead = false;
         }
-
-        private void FixedUpdate()
+        public virtual void Attack(){}
+        public virtual void Shoot()
         {
-            // Check if the character is moving
-            if (GetComponent<Rigidbody>().velocity.magnitude > 0f)
-            {
-                canShoot = true;
-            }
-            else if (canShoot)
-            {
-                Collider[] botColliders = Physics.OverlapSphere(transform.position, rangeshoot, LayerMask.GetMask("Bot"));
-                if (botColliders.Length > 0)
-                {
-                    // Shoot at the first Bot collider found
-                    Vector3 botPosition = botColliders[0].transform.position;
-                    Vector3 shootDirection = (botPosition - transform.position).normalized;
-                    bulletSpawn.LookAt(botPosition);
-                    Shoot();
-                }
-                canShoot = false;
-            }
-        }
-
-        private IEnumerator DisableBullet(GameObject bullet)
-        {
-            yield return new WaitForSeconds(2f);
-            bullet.SetActive(false);
-        }
-
-        private void Shoot()
-        {
-            GameObject bullet = ObjectPool.Instance.SpawnFromPool("Bullet", bulletSpawn.position, bulletSpawn.rotation);
+            GameObject bullet = ObjectPool.Instance.SpawnFromPool("Bullet", attackPoint.position, attackPoint.rotation);
             if (bullet != null)
             {
-                bullet.transform.position = bulletSpawn.position;
-                bullet.transform.rotation = bulletSpawn.rotation;
+                bullet.transform.position = attackPoint.position;
+                bullet.transform.rotation = attackPoint.rotation;
                 bullet.SetActive(true);
-                bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
+                bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * speed;
 
                 StartCoroutine(DisableBullet(bullet));
             }
@@ -70,4 +40,12 @@
                 Debug.Log("No available bullets in pool.");
             }
         }
+        public virtual void Move(){}
+        public virtual void Die(){}
+        
+        private IEnumerator DisableBullet(GameObject bullet)
+        {
+            yield return new WaitForSeconds(2f);
+            bullet.SetActive(false);
+        } 
     }
