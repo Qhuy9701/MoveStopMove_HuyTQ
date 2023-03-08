@@ -6,24 +6,13 @@ public class CharacterSpawner : MonoBehaviour
 {
     [SerializeField] private int spawnBatchSize = 10;
     public List<GameObject> characters = new List<GameObject>();
-    public static CharacterSpawner instance; // Thêm đối tượng static instance
-    public int idOfbot;
-
     public List<GameObject> GetCharacters()
     {
         return characters;
     }
 
-    private void Awake()
-{
-    instance = this; // Gán giá trị cho instance
-}
-
-// ...
-
     private void Start()
     {
-        idOfbot = 100;
         SpawnPlayer();
         SpawnBots();
     }
@@ -50,7 +39,7 @@ public class CharacterSpawner : MonoBehaviour
             }
             bot.name = "Bot" + i;
         }
-}
+    }
 
     public Vector3 GetRandomPosition()
     {
