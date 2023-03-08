@@ -4,15 +4,14 @@
 
     public class CharacterController : MonoBehaviour
     {
-        [SerializeField] private Rigidbody rb;
-        [SerializeField] private float speed = 10f;
+        [SerializeField] protected Rigidbody rb;
+        [SerializeField] protected float speed = 2f;
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private GameObject boomerangPrefab;
-        [SerializeField] private GameObject swordPrefab;
         [SerializeField] protected Transform attackPoint;
-        [SerializeField] public static float attackRange = 2.5f;
-        [SerializeField] private bool isMoving = false;
-        [SerializeField] private bool isDead = false ;
+        [SerializeField] public static float attackRange = 5f;
+        [SerializeField] protected bool isMoving = false;
+        [SerializeField] protected bool isDead = false ;
         [SerializeField] protected bool isAttack = false;
 
         public virtual void OnInit()
@@ -22,7 +21,6 @@
             isAttack = false;
             isDead = false;
         }
-        public virtual void Attack(){}
         public virtual void Shoot()
         {
             GameObject bullet = ObjectPool.Instance.SpawnFromPool("Bullet", attackPoint.position, attackPoint.rotation);
