@@ -15,6 +15,11 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        characterSpawner = FindObjectOfType<CharacterSpawner>();
+    }
+
     private void OnEnable()
     {
         StartCoroutine(DestroyAfterLifetime());
@@ -35,10 +40,16 @@ public class Bullet : MonoBehaviour
     {
         if (other.CompareTag("Character"))
         {
-            other.gameObject.SetActive(false);
-            ObjectPool.Instance.SpawnFromPool("bullet", transform.position, Quaternion.identity);
+            ObjectPool.Instance.ReturnToPool("Bot", other.gameObject);
             gameObject.SetActive(false);
             Debug.Log("Hit");
+            Invoke("Spawn", 1f);
         }
+    }
+
+    private void Spawn()
+    {
+        ObjectPool.Instance.SpawnFromPool("Bot", characterSpawner.GetRandomPosition(), Quaternion.identity);
+        ObjectPool.Instance.ReturnToPool("Bullet", gameObject);
     }
 }
