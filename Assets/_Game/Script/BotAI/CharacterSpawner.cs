@@ -6,6 +6,7 @@ public class CharacterSpawner : MonoBehaviour
 {
     [SerializeField] private int spawnBatchSize = 10;
     public List<GameObject> characters = new List<GameObject>();
+    public static CharacterSpawner instance;
     public List<GameObject> GetCharacters()
     {
         return characters;
