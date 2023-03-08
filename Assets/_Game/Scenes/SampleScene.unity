@@ -421,7 +421,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 693589222}
-  - component: {fileID: 693589221}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -429,20 +428,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &693589221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 693589220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3be0d1a20b41e0b469bf8e6f403d85ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnBatchSize: 10
-  characters: []
 --- !u!4 &693589222
 Transform:
   m_ObjectHideFlags: 0
@@ -828,7 +813,6 @@ GameObject:
   - component: {fileID: 1953654495}
   - component: {fileID: 1953654496}
   - component: {fileID: 1953654497}
-  - component: {fileID: 1953654498}
   m_Layer: 0
   m_Name: Pool
   m_TagString: Untagged
@@ -890,15 +874,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnBatchSize: 10
   characters: []
---- !u!114 &1953654498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1953654493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a8cebf83518f3e47be2591a987e0824, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

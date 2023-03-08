@@ -7,17 +7,12 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifetime = 2f;
     CharacterSpawner characterSpawner;
-    
+
     private Rigidbody rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-    }
-
-    private void Start()
-    {
-        characterSpawner = FindObjectOfType<CharacterSpawner>();
     }
 
     private void OnEnable()
@@ -40,16 +35,10 @@ public class Bullet : MonoBehaviour
     {
         if (other.CompareTag("Character"))
         {
-            ObjectPool.Instance.ReturnToPool("Bot", other.gameObject);
+            other.gameObject.SetActive(false);
+            ObjectPool.Instance.SpawnFromPool("bullet", transform.position, Quaternion.identity);
             gameObject.SetActive(false);
             Debug.Log("Hit");
-            Invoke("Spawn", 1f);
-            characterSpawner.idOfbot--;
         }
-    }
-    private void Spawn()
-    {
-        ObjectPool.Instance.SpawnFromPool("Bot", characterSpawner.GetRandomPosition(), Quaternion.identity);
-        ObjectPool.Instance.ReturnToPool("Bullet", gameObject);
     }
 }
