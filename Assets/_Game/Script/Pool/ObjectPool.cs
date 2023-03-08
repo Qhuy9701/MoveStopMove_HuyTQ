@@ -54,8 +54,9 @@ public class ObjectPool : Singleton<ObjectPool>
 
     public void ReturnToPool(string tag, GameObject objectToReturn) {
     if (!poolDictionary.ContainsKey(tag)) {
-        objectToReturn.SetActive(false);
         Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
+        objectToReturn.SetActive(false);
+            poolDictionary[tag].Enqueue(objectToReturn);
         return;
     }
 
