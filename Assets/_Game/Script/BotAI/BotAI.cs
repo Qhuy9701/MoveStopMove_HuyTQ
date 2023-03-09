@@ -1,121 +1,59 @@
-// using UnityEngine;
-// using UnityEngine.AI;
-// using System.Collections;
-// using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-// public class BotAI : CharacterController
-// {
-// public GameObject currentTarget;
-// private NavMeshAgent agent;
-// private bool isAttacking;
-// private bool canAttack;
-// private void Awake()
-// {
-//     agent = GetComponent<NavMeshAgent>();
-// }
+public class BotAI : CharacterController
+{
+    private GameObject target; // Biến để lưu trữ mục tiêu hiện tại của bot
 
-// private void Start()
-// {
-//     currentTarget = GetNewTarget();
-//     agent.SetDestination(currentTarget.transform.position);
-// }
+    private void Start()
+    {
+        // Random target khi khởi động game
+        SetTarget();
+    }
 
+    private void Update()
+    {
+        // Kiểm tra xem bot đã đạt được mục tiêu hay chưa
+        if (target != null)
+        {
+            float distance = Vector3.Distance(transform.position, target.transform.position);
 
-// private void Update()
-// {
-//     if (!isDead)
-//     {
-//         if (currentTarget == null || agent.remainingDistance <= agent.stoppingDistance)
-//         {
-//             currentTarget = GetNewTarget();
-//             agent.SetDestination(currentTarget.transform.position);
-//             isAttacking = false;
-//         }
+            // Nếu target trong range tấn công, bot sẽ dừng lại để bắn
+            if (distance < attackRange)
+            {
+                transform.LookAt(target.transform);
 
-//         if (!isAttacking && agent.remainingDistance > agent.stoppingDistance)
-//         {
-//             agent.isStopped = false;
-//         }
+                // Tấn công target
+                Attack();
+            }
+            else
+            {
+                // Di chuyển tới mục tiêu
+                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            // Nếu không có target thì chọn target mới
+            SetTarget();
+        }
+    }
 
-//         if (!isAttacking && agent.remainingDistance <= agent.stoppingDistance)
-//         {
-//             canAttack = true;
-//             agent.isStopped = true;
-//             agent.velocity = Vector3.zero;
+    private void SetTarget()
+    {
+        // Lấy danh sách các character từ CharacterSpawner
+        List<GameObject> characters = CharacterSpawner.instance.GetCharacters();
 
-//             if (currentTarget.CompareTag("Character"))
-//             {
-//                 BotAI targetBot = currentTarget.GetComponent<BotAI>();
-//                 if (targetBot != null && targetBot.isDead)
-//                 {
-//                     currentTarget = GetNewTarget();
-//                     agent.SetDestination(currentTarget.transform.position);
-//                     isAttacking = false;
-//                 }
-//                 else
-//                 {
-//                     StartCoroutine(Attack());
-//                 }
-//             }
-//             else
-//             {
-//                 StartCoroutine(Attack());
-//             }
-//         }
-//     }
-// }
+        // Chọn ngẫu nhiên một character từ danh sách
+        if (characters.Count > 0)
+        {
+            int randomIndex = Random.Range(0, characters.Count);
+            target = characters[randomIndex];
+        }
+    }
 
-
-// private IEnumerator Attack()
-// {
-//     yield return new WaitForSeconds(2f);
-//     currentTarget = GetNewTarget();
-
-//     if (currentTarget.CompareTag("Character"))
-//     {
-//         BotAI targetBot = currentTarget.GetComponent<BotAI>();
-//         if (targetBot != null && !targetBot.isDead)
-//         {
-//             agent.isStopped = false;
-//             agent.SetDestination(currentTarget.transform.position);
-//             isAttacking = false;
-//         }
-//         else
-//         {
-//             currentTarget = GetNewTarget();
-//             agent.SetDestination(currentTarget.transform.position);
-//             isAttacking = false;
-//         }
-//     }
-//     else
-//     {
-//         currentTarget = GetNewTarget();
-//         agent.SetDestination(currentTarget.transform.position);
-//         isAttacking = false;
-//     }
-// }
-
-// private GameObject GetNewTarget()
-// {
-//     List<GameObject> targets = GameManager.Instance.GetCharacters();
-
-//     // Remove this bot from the list of targets
-//     targets.Remove(gameObject);
-
-//     GameObject newTarget = targets[Random.Range(0, targets.Count)];
-
-//     if (newTarget == gameObject)
-//     {
-//         return GetNewTarget();
-//     }
-
-//     return newTarget;
-// }
-
-// public void TakeDamage()
-// {
-//     isDead = true;
-//     agent.isStopped = true;
-//     agent.velocity = Vector3.zero;
-// }
-// }
+    private void Attack()
+    {
+        // Thực hiện hành động tấn công tại đây
+    }
+}
