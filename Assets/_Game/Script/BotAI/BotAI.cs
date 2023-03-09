@@ -1,59 +1,45 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
-public class BotAI : CharacterController
+public class BotAI : MonoBehaviour
 {
-    private GameObject target; // Biến để lưu trữ mục tiêu hiện tại của bot
+    public List<GameObject> targets = new List<GameObject>();
+    public GameObject currentTarget;
 
     private void Start()
     {
-        // Random target khi khởi động game
-        SetTarget();
+        CharacterSpawner spawner = FindObjectOfType<CharacterSpawner>();
+        targets = spawner.GetCharacters();
     }
 
     private void Update()
     {
-        // Kiểm tra xem bot đã đạt được mục tiêu hay chưa
-        if (target != null)
+        if (currentTarget == null)
         {
-            float distance = Vector3.Distance(transform.position, target.transform.position);
-
-            // Nếu target trong range tấn công, bot sẽ dừng lại để bắn
-            if (distance < attackRange)
-            {
-                transform.LookAt(target.transform);
-
-                // Tấn công target
-                Attack();
-            }
-            else
-            {
-                // Di chuyển tới mục tiêu
-                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
-            }
+            currentTarget = GetRandomTarget();
         }
-        else
+
+        if (currentTarget == gameObject)
         {
-            // Nếu không có target thì chọn target mới
-            SetTarget();
+            currentTarget = GetRandomTarget();
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, currentTarget.transform.position, Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, currentTarget.transform.position) < 0.1f)
+        {
+            currentTarget = GetRandomTarget();
         }
     }
 
-    private void SetTarget()
+    private GameObject GetRandomTarget()
     {
-        // Lấy danh sách các character từ CharacterSpawner
-        List<GameObject> characters = CharacterSpawner.instance.GetCharacters();
-
-        // Chọn ngẫu nhiên một character từ danh sách
-        if (characters.Count > 0)
+        int randomIndex = Random.Range(0, targets.Count);
+        GameObject target = targets[randomIndex];
+        if (target == gameObject)
         {
-            int randomIndex = Random.Range(0, characters.Count);
-            target = characters[randomIndex];
+            target = GetRandomTarget();
         }
-    }
-
-    private void Attack()
-    {
-        // Thực hiện hành động tấn công tại đây
+        return target;
     }
 }

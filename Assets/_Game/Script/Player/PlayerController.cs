@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PlayerController : CharacterController
 {
-    public JoyStickMove joyStickMove;  // reference to the JoyStickMove script
+    [SerializeField] JoyStickMove joyStickMove;
+    [SerializeField] private bool win;
 
     public void Start()
     {
-        if(joyStickMove == null)
+        if (joyStickMove == null)
         {
             joyStickMove = FindObjectOfType<JoyStickMove>();
         }
@@ -17,29 +18,49 @@ public class PlayerController : CharacterController
     public override void OnInit()
     {
         base.OnInit();
+        win = false;
     }
 
     private void FixedUpdate()
+    {
+        Move();
+    }
+
+    public override void Move()
+    {
+        // Check if the character is moving
+        if (GetComponent<Rigidbody>().velocity.magnitude > 0f)
         {
-            // Check if the character is moving
-            if (GetComponent<Rigidbody>().velocity.magnitude > 0f)
-            {
-                isAttack = true;
-            }
-            else if (isAttack)
-            {
-                Collider[] botColliders = Physics.OverlapSphere(transform.position, attackRange, LayerMask.GetMask("Bot"));
-                if (botColliders.Length > 0)
-                {
-                    // Shoot at the first Bot collider found
-                    Vector3 botPosition = botColliders[0].transform.position;
-                    Vector3 shootDirection = (botPosition - transform.position).normalized;
-                    attackPoint.LookAt(botPosition);
-                    Shoot();
-                }
-                isAttack = false;
-            }
+            isAttack = true;
         }
+        else if (isAttack)
+        {
+            Collider[] botColliders = Physics.OverlapSphere(transform.position, attackRange, LayerMask.GetMask("Bot"));
+            if (botColliders.Length > 0)
+            {
+                float minDistance = Mathf.Infinity;
+                Vector3 botPosition = Vector3.zero;
+
+                // Find the closest Bot collider
+                foreach (Collider botCollider in botColliders)
+                {
+                    float distance = Vector3.Distance(transform.position, botCollider.transform.position);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        botPosition = botCollider.transform.position;
+                    }
+                }
+
+                // Shoot at the closest Bot collider found
+                Vector3 shootDirection = (botPosition - transform.position).normalized;
+                attackPoint.LookAt(botPosition);
+                Shoot();
+            }
+
+            isAttack = false;
+        }
+    }
 
 }
 
