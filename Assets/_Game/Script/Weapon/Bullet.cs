@@ -54,9 +54,9 @@ public class Bullet : MonoBehaviour
     }
 
 
-    //private void Spawn()
-    //{
-    //    ObjectPool.Instance.SpawnFromPool("Bot", characterSpawner.GetRandomPosition(), Quaternion.identity);
-    //    ObjectPool.Instance.ReturnToPool("Bullet", gameObject);
-    //}
+    private void Spawn()
+    {
+        ObjectPool.Instance.SpawnFromPool("Bot", characterSpawner.GetRandomPosition(), Quaternion.identity);
+        ObjectPool.Instance.ReturnToPool("Bullet", gameObject);
+    }
 }

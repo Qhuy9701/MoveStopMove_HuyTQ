@@ -25,8 +25,8 @@ public class Boomerang : CharacterController
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, _attackPoint.position, returnSpeed * Time.deltaTime);
-            if (transform.position == _attackPoint.position)
+            transform.position = Vector3.MoveTowards(transform.position, attackPoint.position, returnSpeed * Time.deltaTime);
+            if (transform.position == attackPoint.position)
             {
                 gameObject.SetActive(false);
             }
