@@ -17,6 +17,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField] protected bool _isDead = false;
     [SerializeField] protected bool _isAttack = false;
 
+    Bullet bullet;
+
     public virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -34,6 +36,7 @@ public class CharacterController : MonoBehaviour
             }
         }
     }
+
     public virtual void OnInit()
     {
         _isMoving = true;
@@ -42,8 +45,8 @@ public class CharacterController : MonoBehaviour
     }
     public virtual void Attack()
     {
-        GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, _attackPoint.position, _attackPoint.rotation);
-        //GameObject bullet = ObjectPool.Instance.SpawnFromPool("Boomerang", _attackPoint.position, _attackPoint.rotation);
+        //GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, _attackPoint.position, _attackPoint.rotation);
+        GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOOMERANG, _attackPoint.position, _attackPoint.rotation);
         if (bullet != null)
         {
             bullet.transform.position = _attackPoint.position;
@@ -65,6 +68,12 @@ public class CharacterController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public virtual void UpSize()
+    {
+        transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
+        _attackRange += 0.5f;
+
+    }    
     private IEnumerator DisableBullet(GameObject bullet)
     {
         yield return new WaitForSeconds(2f);
