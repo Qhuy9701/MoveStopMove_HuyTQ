@@ -46,21 +46,21 @@ public class CharacterController : MonoBehaviour
     }
     public virtual void Attack()
     {
-        //GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, _attackPoint.position, _attackPoint.rotation);
-        GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOOMERANG, _attackPoint.position, _attackPoint.rotation);
-        if (bullet != null)
-        {
-            bullet.transform.position = _attackPoint.position;
-            bullet.transform.rotation = _attackPoint.rotation;
-            bullet.SetActive(true);
-            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * _speed;
+        GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, _attackPoint.position, _attackPoint.rotation);
+        //GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOOMERANG, _attackPoint.position, _attackPoint.rotation);
+        //if (bullet != null)
+        //{
+        //    bullet.transform.position = _attackPoint.position;
+        //    bullet.transform.rotation = _attackPoint.rotation;
+        //    bullet.SetActive(true);
+        //    bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * _speed;
 
-            StartCoroutine(DisableBullet(bullet));
-        }
-        else
-        {
-            Debug.Log("No available bullets in pool.");
-        }
+        //    StartCoroutine(DisableBullet(bullet));
+        //}
+        //else
+        //{
+        //    Debug.Log("No available bullets in pool.");
+        //}
     }
     public virtual void Move() { }
     public virtual void Die() 

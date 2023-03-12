@@ -24,6 +24,10 @@ public class PlayerController : CharacterController
     private void FixedUpdate()
     {
         Move();
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Attack();
+        }
     }
 
     public override void Move()

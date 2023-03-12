@@ -16,6 +16,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
                 {
                     CreateSingletonObject();
                 }
+                Debug.Log("Null");
             }
 
             return instance;

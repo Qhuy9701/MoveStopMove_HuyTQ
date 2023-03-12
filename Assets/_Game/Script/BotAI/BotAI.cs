@@ -7,17 +7,25 @@ public class BotAI : CharacterController
 {
     private NavMeshAgent agent;
     public List<GameObject> characters = new List<GameObject>();
-    private bool _hasFired = false; 
+    private bool _hasFired = false;
 
-    
+
     void Start()
     {
-        _currentTarget = characters[Random.Range(0, characters.Count)].transform;
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = _speed;
-        agent.stoppingDistance = _attackRange;
-        agent.SetDestination(_currentTarget.position);
+        if (characters.Count > 0)
+        {
+            _currentTarget = characters[Random.Range(0, characters.Count)].transform;
+            agent = GetComponent<NavMeshAgent>();
+            agent.speed = _speed;
+            agent.stoppingDistance = _attackRange;
+            agent.SetDestination(_currentTarget.position);
+        }
+        else
+        {
+            Debug.LogWarning("List of characters is empty!");
+        }
     }
+
     void Update()
     {
         Move();
