@@ -31,11 +31,11 @@ public class PlayerController : CharacterController
         // Check if the character is moving
         if (GetComponent<Rigidbody>().velocity.magnitude > 0f)
         {
-            isAttack = true;
+            _isAttack = true;
         }
-        else if (isAttack)
+        else if (_isAttack)
         {
-            Collider[] botColliders = Physics.OverlapSphere(transform.position, attackRange, LayerMask.GetMask("Bot"));
+            Collider[] botColliders = Physics.OverlapSphere(transform.position, _attackRange, LayerMask.GetMask("Bot"));
             if (botColliders.Length > 0)
             {
                 float minDistance = Mathf.Infinity;
@@ -54,11 +54,11 @@ public class PlayerController : CharacterController
 
                 // Shoot at the closest Bot collider found
                 Vector3 shootDirection = (botPosition - transform.position).normalized;
-                attackPoint.LookAt(botPosition);
-                Shoot();
+                _attackPoint.LookAt(botPosition);
+                Attack();
             }
 
-            isAttack = false;
+            _isAttack = false;
         }
     }
 

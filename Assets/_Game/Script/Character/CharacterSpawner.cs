@@ -5,6 +5,7 @@ using System.Collections;
 public class CharacterSpawner : MonoBehaviour
 {
     [SerializeField] private int spawnBatchSize = 10;
+
     public List<GameObject> characters = new List<GameObject>();
     public static CharacterSpawner instance;
     public List<GameObject> GetCharacters()
@@ -20,7 +21,7 @@ public class CharacterSpawner : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        GameObject player = ObjectPool.Instance.SpawnFromPool("Player", GetRandomPosition(), Quaternion.identity);
+        GameObject player = ObjectPool.Instance.SpawnFromPool(Constants.TAG_PLAYER, GetRandomPosition(), Quaternion.identity);
         if (player != null)
         {
             player.SetActive(true);
@@ -32,7 +33,7 @@ public class CharacterSpawner : MonoBehaviour
     {
         for (int i = 0; i < spawnBatchSize; i++)
         {
-            GameObject bot = ObjectPool.Instance.SpawnFromPool("Bot", GetRandomPosition(), Quaternion.identity);
+            GameObject bot = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOT, GetRandomPosition(), Quaternion.identity);
             if (bot != null)
             {
                 bot.SetActive(true);
@@ -54,14 +55,13 @@ public class CharacterSpawner : MonoBehaviour
 
             foreach (GameObject character in characters)
             {
-                if (Vector3.Distance(position, character.transform.position) < CharacterController.attackRange * 2f)
+                if (Vector3.Distance(position, character.transform.position) < CharacterController._attackRange * 2f)
                 {
                     positionIsValid = false;
                     break;
                 }
             }
         }
-
         return position;
     }
 

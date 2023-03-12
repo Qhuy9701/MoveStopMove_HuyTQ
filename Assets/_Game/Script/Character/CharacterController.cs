@@ -4,53 +4,52 @@ using System.Collections;
 
 public class CharacterController : MonoBehaviour
 {
-
+    //tranform
     [SerializeField] protected Rigidbody rb;
-    [SerializeField] protected float speed = 10f;
-    [SerializeField] protected Transform attackPoint;
-    [SerializeField] public static float attackRange = 2.5f;
-    [SerializeField] protected bool isMoving = false;
-    [SerializeField] protected bool isDead = false;
-    [SerializeField] protected bool isAttack = false;
+    [SerializeField] protected Transform _attackPoint;
+    [SerializeField] protected Transform _currentTarget;
+    //float
+    [SerializeField] protected float _speed = 5f;
+    [SerializeField] public static float _attackRange = 4f;
 
+    //bool
+    [SerializeField] protected bool _isMoving = false;
+    [SerializeField] protected bool _isDead = false;
+    [SerializeField] protected bool _isAttack = false;
 
     public virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        if (attackPoint == null)
+        if (_attackPoint == null)
         {
             GameObject attackPointObject = GameObject.FindGameObjectWithTag("AttackPoint");
             if (attackPointObject != null)
             {
-                attackPoint = attackPointObject.transform;
+                _attackPoint = attackPointObject.transform;
             }
             else
             {
+                _attackPoint = attackPointObject.transform;
                 Debug.LogError("Could not find attackpoint object with tag 'attackpoint'.");
             }
         }
     }
-
-    public virtual void Start()
-    {
-
-    }
     public virtual void OnInit()
     {
-        isMoving = true;
-        isAttack = false;
-        isDead = false;
+        _isMoving = true;
+        _isAttack = false;
+        _isDead = false;
     }
-    public virtual void Shoot()
+    public virtual void Attack()
     {
-        //GameObject bullet = ObjectPool.Instance.SpawnFromPool("Bullet", attackPoint.position, attackPoint.rotation);
-        GameObject bullet = ObjectPool.Instance.SpawnFromPool("Boomerang", attackPoint.position, attackPoint.rotation);
+        GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, _attackPoint.position, _attackPoint.rotation);
+        //GameObject bullet = ObjectPool.Instance.SpawnFromPool("Boomerang", _attackPoint.position, _attackPoint.rotation);
         if (bullet != null)
         {
-            bullet.transform.position = attackPoint.position;
-            bullet.transform.rotation = attackPoint.rotation;
+            bullet.transform.position = _attackPoint.position;
+            bullet.transform.rotation = _attackPoint.rotation;
             bullet.SetActive(true);
-            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * speed;
+            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * _speed;
 
             StartCoroutine(DisableBullet(bullet));
         }
@@ -60,7 +59,11 @@ public class CharacterController : MonoBehaviour
         }
     }
     public virtual void Move() { }
-    public virtual void Die() { }
+    public virtual void Die() 
+    { 
+        _isDead = true;
+        gameObject.SetActive(false);
+    }
 
     private IEnumerator DisableBullet(GameObject bullet)
     {

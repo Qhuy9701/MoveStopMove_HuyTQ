@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifetime = 2f;
     CharacterSpawner characterSpawner;
-
+    CharacterController characterController;
     private Rigidbody rb;
 
     private void Awake()
@@ -43,9 +43,16 @@ public class Bullet : MonoBehaviour
             ObjectPool.Instance.ReturnToPool("Bot", other.gameObject);
             gameObject.SetActive(false);
             Debug.Log("Hit");
+
+            // Lấy tham chiếu đến đối tượng CharacterController
+            characterController = other.GetComponent<CharacterController>();
+            characterController.Die();
+
             Invoke("Spawn", 1f);
+
         }
     }
+
 
     private void Spawn()
     {
