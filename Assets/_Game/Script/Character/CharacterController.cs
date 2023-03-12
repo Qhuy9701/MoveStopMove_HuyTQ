@@ -3,7 +3,8 @@ using UnityEngine;
 using System.Collections;
 
 public class CharacterController : MonoBehaviour
-{
+{   
+    public SphereCollider attackRange;
     //tranform
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected Transform _attackPoint;
