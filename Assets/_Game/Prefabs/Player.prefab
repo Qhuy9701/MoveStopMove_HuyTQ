@@ -211,7 +211,7 @@ Transform:
   m_GameObject: {fileID: 2256224457881826114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2256224456793292394}
@@ -285,7 +285,6 @@ MonoBehaviour:
   _isDead: 0
   _isAttack: 0
   joyStickMove: {fileID: 2256224457881826117}
-  win: 0
 --- !u!1 &4870825044923778263
 GameObject:
   m_ObjectHideFlags: 0
