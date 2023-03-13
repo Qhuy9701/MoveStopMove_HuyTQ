@@ -1,23 +1,44 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
+using System.Collections;
 
 public class BotAI : CharacterController
 {
     private NavMeshAgent agent;
-    public List<GameObject> characters = new List<GameObject>();
-    private bool _hasFired = false; 
+    private List<GameObject> characters = new List<GameObject>();
+    private bool _hasFired = false;
 
-    
     void Start()
     {
-        _currentTarget = characters[Random.Range(0, characters.Count)].transform;
+        CharacterSpawner characterSpawner = FindObjectOfType<CharacterSpawner>();
+        if (characterSpawner != null)
+        {
+            //characters = characterSpawner.GetCharacters();
+            if (characters.Count > 0)
+            {
+                _currentTarget = characters[Random.Range(0, characters.Count)].transform;
+            }
+            else
+            {
+                Debug.LogError("No characters found in list!");
+                return;
+            }
+        }
+        else
+        {
+            Debug.LogError("CharacterSpawner not found!");
+            return;
+        }
+
         agent = GetComponent<NavMeshAgent>();
         agent.speed = _speed;
         agent.stoppingDistance = _attackRange;
         agent.SetDestination(_currentTarget.position);
     }
+
+    // ...
+
     void Update()
     {
         Move();
@@ -80,5 +101,5 @@ public class BotAI : CharacterController
     {
         yield return new WaitForSeconds(1f);
         _hasFired = false;
-    }   
+    }
 }

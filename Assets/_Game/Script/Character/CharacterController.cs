@@ -8,6 +8,7 @@ public class CharacterController : MonoBehaviour
     //tranform
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected Transform _attackPoint;
+    public Transform AttackPoint => _attackPoint;
     [SerializeField] protected Transform _currentTarget;
     //float
     [SerializeField] protected float _speed = 5f;
@@ -32,7 +33,7 @@ public class CharacterController : MonoBehaviour
             }
             else
             {
-                _attackPoint = attackPointObject.transform;
+                //_attackPoint = attackPointObject.transform;
                 Debug.LogError("Could not find attackpoint object with tag 'attackpoint'.");
             }
         }
@@ -46,21 +47,8 @@ public class CharacterController : MonoBehaviour
     }
     public virtual void Attack()
     {
-        GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, _attackPoint.position, _attackPoint.rotation);
-        //GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOOMERANG, _attackPoint.position, _attackPoint.rotation);
-        //if (bullet != null)
-        //{
-        //    bullet.transform.position = _attackPoint.position;
-        //    bullet.transform.rotation = _attackPoint.rotation;
-        //    bullet.SetActive(true);
-        //    bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * _speed;
-
-        //    StartCoroutine(DisableBullet(bullet));
-        //}
-        //else
-        //{
-        //    Debug.Log("No available bullets in pool.");
-        //}
+        //GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, _attackPoint.position, _attackPoint.rotation);
+        GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOOMERANG, _attackPoint.position, _attackPoint.rotation);
     }
     public virtual void Move() { }
     public virtual void Die() 
@@ -75,9 +63,4 @@ public class CharacterController : MonoBehaviour
         _attackRange += 0.5f;
 
     }    
-    private IEnumerator DisableBullet(GameObject bullet)
-    {
-        yield return new WaitForSeconds(2f);
-        bullet.SetActive(false);
-    }
 }

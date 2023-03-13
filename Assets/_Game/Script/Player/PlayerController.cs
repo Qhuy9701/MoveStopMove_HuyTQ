@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerController : CharacterController
 {
     [SerializeField] JoyStickMove joyStickMove;
-    [SerializeField] private bool win;
 
     public void Start()
     {
@@ -18,11 +17,15 @@ public class PlayerController : CharacterController
     public override void OnInit()
     {
         base.OnInit();
-        win = false;
     }
 
     private void FixedUpdate()
     {
+        //enter button q attack
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Attack();
+        }
         Move();
     }
 

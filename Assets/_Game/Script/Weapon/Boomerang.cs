@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class Boomerang : CharacterController
+public class Boomerang : MonoBehaviour
 {
+    CharacterController _characterController;
     public float speed = 10f;
     public float returnDelay = 1f;
     public float returnSpeed = 5f;
@@ -17,6 +18,11 @@ public class Boomerang : CharacterController
         StartCoroutine(ReturnToShootPoint());
     }
 
+    public void SetCharacter(CharacterController characterController)
+    {
+        this._characterController = characterController;
+    }
+
     private void Update()
     {
         if (!isReturning)
@@ -25,8 +31,8 @@ public class Boomerang : CharacterController
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, attackPoint.position, returnSpeed * Time.deltaTime);
-            if (transform.position == attackPoint.position)
+            transform.position = Vector3.MoveTowards(transform.position, _characterController.AttackPoint.position, returnSpeed * Time.deltaTime);
+            if (transform.position == _characterController.AttackPoint.position)
             {
                 gameObject.SetActive(false);
             }

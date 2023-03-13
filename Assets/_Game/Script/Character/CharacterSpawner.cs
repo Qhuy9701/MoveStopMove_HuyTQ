@@ -1,13 +1,17 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 
 public class CharacterSpawner : MonoBehaviour
 {
     [SerializeField] private int spawnBatchSize = 10;
-
+    public List<GameObject> posSpawn = new List<GameObject>();
+    public List<GameObject> GetPosSpawn()
+    {
+        return posSpawn;
+    }
     public List<GameObject> characters = new List<GameObject>();
-    public static CharacterSpawner instance;
     public List<GameObject> GetCharacters()
     {
         return characters;
@@ -33,36 +37,78 @@ public class CharacterSpawner : MonoBehaviour
     {
         for (int i = 0; i < spawnBatchSize; i++)
         {
-            GameObject bot = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOT, GetRandomPosition(), Quaternion.identity);
-            if (bot != null)
+            bool spawned = false;
+            while (!spawned) // Keep trying to spawn until a valid position is found
             {
-                bot.SetActive(true);
-                AddCharacter(bot);
-            }
-            bot.name = "Bot" + i;
-        }
-    }
-
-    public Vector3 GetRandomPosition()
-    {
-        Vector3 position = Vector3.zero;
-        bool positionIsValid = false;
-
-        while (!positionIsValid)
-        {
-            position = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
-            positionIsValid = true;
-
-            foreach (GameObject character in characters)
-            {
-                if (Vector3.Distance(position, character.transform.position) < CharacterController._attackRange * 2f)
+                GameObject spawnPosition = GetRandomSpawnPosition();
+                if (!IsPositionOccupied(spawnPosition.transform.position))
                 {
-                    positionIsValid = false;
-                    break;
+                    GameObject bot = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOT, spawnPosition.transform.position, Quaternion.identity);
+                    if (bot != null)
+                    {
+                        bot.SetActive(true);
+                        AddCharacter(bot);
+                        bot.name = "Bot" + i;
+                        spawned = true;
+                    }
                 }
             }
         }
-        return position;
+    }
+
+    private GameObject GetRandomSpawnPosition()
+    {
+        // Create a list of spawn positions that do not already have a character
+        List<GameObject> emptySpawnPositions = posSpawn.Where(p => !p.GetComponent<SpawnPosController>().isHavePlayer()).ToList();
+
+        // Shuffle the list to randomize the order of spawn positions
+        emptySpawnPositions = emptySpawnPositions.OrderBy(x => Random.value).ToList();
+
+        // Select the first available spawn position in the shuffled list
+        GameObject spawnPosition = emptySpawnPositions[0];
+        return spawnPosition;
+    }
+
+    private bool IsPositionOccupied(Vector3 position)
+    {
+        // Check for colliders within 1 unit of the spawn position
+        Collider[] colliders = Physics.OverlapSphere(position, 1f);
+        // Check if any colliders are characters
+        bool hasCharacter = colliders.Any(c => c.CompareTag(Constants.TAG_PLAYER) || c.CompareTag(Constants.TAG_BOT));
+        return hasCharacter;
+    }
+
+
+    public Vector3 GetRandomPosition()
+    {
+        // Create a list of spawn positions that do not already have a character
+        List<GameObject> emptySpawnPositions = posSpawn.Where(p => !p.GetComponent<SpawnPosController>().isHavePlayer()).ToList();
+
+        // Shuffle the list to randomize the order of spawn positions
+        emptySpawnPositions = emptySpawnPositions.OrderBy(x => Random.value).ToList();
+
+        // Check if the selected position is too close to other characters, if so keep selecting random position until finding an empty one
+        float minDistance = 1.0f;
+        Vector3 randomPos = Vector3.zero;
+        bool validPosition = false;
+        while (!validPosition && emptySpawnPositions.Count > 0)
+        {
+            // Select the first available spawn position in the shuffled list
+            randomPos = emptySpawnPositions[0].transform.position;
+
+            // Check if the selected position is too close to other characters
+            if (!characters.Any(c => Vector3.Distance(c.transform.position, randomPos) < minDistance))
+            {
+                validPosition = true;
+            }
+            else
+            {
+                // Remove the selected position from the list of available positions
+                emptySpawnPositions.RemoveAt(0);
+            }
+        }
+
+        return randomPos;
     }
 
     public void AddCharacter(GameObject character)
