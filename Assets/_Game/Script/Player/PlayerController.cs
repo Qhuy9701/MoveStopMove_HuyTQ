@@ -59,6 +59,9 @@ public class PlayerController : CharacterController
                 Vector3 shootDirection = (botPosition - transform.position).normalized;
                 _attackPoint.LookAt(botPosition);
                 Attack();
+                //Debug
+                Debug.DrawLine(transform.position, botPosition, Color.red, 1f);
+                Debug.Log("Attack");
             }
 
             _isAttack = false;

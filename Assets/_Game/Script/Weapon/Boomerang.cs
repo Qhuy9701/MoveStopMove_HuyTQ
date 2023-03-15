@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class Boomerang : MonoBehaviour
 {
@@ -10,6 +10,7 @@ public class Boomerang : MonoBehaviour
 
     private Vector3 initialPosition;
     private bool isReturning = false;
+
 
     private void OnEnable()
     {
@@ -29,7 +30,7 @@ public class Boomerang : MonoBehaviour
         {
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-        else
+        else if (_characterController != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, _characterController.AttackPoint.position, returnSpeed * Time.deltaTime);
             if (transform.position == _characterController.AttackPoint.position)

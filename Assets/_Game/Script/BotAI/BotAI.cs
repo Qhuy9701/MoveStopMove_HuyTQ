@@ -1,105 +1,112 @@
-﻿using UnityEngine;
-using UnityEngine.AI;
-using System.Collections.Generic;
-using System.Collections;
+﻿//using UnityEngine;
+//using UnityEngine.AI;
+//using System.Collections.Generic;
+//using System.Collections;
 
-public class BotAI : CharacterController
-{
-    private NavMeshAgent agent;
-    private List<GameObject> characters = new List<GameObject>();
-    private bool _hasFired = false;
+//public class BotAI : CharacterController
+//{
+//    private NavMeshAgent agent;
+//    private List<GameObject> characters = new List<GameObject>();
+//    private bool _hasFired = false;
 
-    void Start()
-    {
-        CharacterSpawner characterSpawner = FindObjectOfType<CharacterSpawner>();
-        if (characterSpawner != null)
-        {
-            //characters = characterSpawner.GetCharacters();
-            if (characters.Count > 0)
-            {
-                _currentTarget = characters[Random.Range(0, characters.Count)].transform;
-            }
-            else
-            {
-                Debug.LogError("No characters found in list!");
-                return;
-            }
-        }
-        else
-        {
-            Debug.LogError("CharacterSpawner not found!");
-            return;
-        }
+//    private void Awake()
+//    {
+//        base.Awake();
+//        //getcomponent CharacterSpawner
+//        CharacterSpawner characterSpawner = FindObjectOfType<CharacterSpawner>();
 
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = _speed;
-        agent.stoppingDistance = _attackRange;
-        agent.SetDestination(_currentTarget.position);
-    }
+//    }
+//    void Start()
+//    {
+//        CharacterSpawner characterSpawner = FindObjectOfType<CharacterSpawner>();
+//        if (characterSpawner != null)
+//        {
+//            //characters = characterSpawner.GetCharacters();
+//            if (characters.Count > 0)
+//            {
+//                _currentTarget = characters[Random.Range(0, characters.Count)].transform;
+//            }
+//            else
+//            {
+//                Debug.LogError("No characters found in list!");
+//                return;
+//            }
+//        }
+//        else
+//        {
+//            Debug.LogError("CharacterSpawner not found!");
+//            return;
+//        }
 
-    // ...
+//        agent = GetComponent<NavMeshAgent>();
+//        agent.speed = _speed;
+//        agent.stoppingDistance = _attackRange;
+//        agent.SetDestination(_currentTarget.position);
+//    }
 
-    void Update()
-    {
-        Move();
-    }
+//    // ...
 
-    public override void Move()
-    {
-        if (_isDead)
-        {
-            return;
-        }
+//    void Update()
+//    {
+//        Move();
+//    }
 
-        if (_currentTarget != null)
-        {
-            // Tính toán khoảng cách giữa bot và current target
-            float distanceToTarget = Vector3.Distance(transform.position, _currentTarget.transform.position);
+//    public override void Move()
+//    {
+//        if (_isDead)
+//        {
+//            return;
+//        }
 
-            // Nếu current target trong tầm bắn
-            if (distanceToTarget <= _attackRange)
-            {
-                StopMove();
-                return;
-            }
+//        if (_currentTarget != null)
+//        {
+//            // Tính toán khoảng cách giữa bot và current target
+//            float distanceToTarget = Vector3.Distance(transform.position, _currentTarget.transform.position);
 
-            // Di chuyển tới current target
-            transform.position = Vector3.MoveTowards(transform.position, _currentTarget.transform.position, _speed * Time.deltaTime);
+//            // Nếu current target trong tầm bắn
+//            if (distanceToTarget <= _attackRange)
+//            {
+//                StopMove();
+//                return;
+//            }
 
-            // Nếu đang chạy thì dừng chạy
-            if (_isMoving)
-            {
-                _isMoving = false;
-            }
-        }
-    }
+//            // Di chuyển tới current target
+//            transform.position = Vector3.MoveTowards(transform.position, _currentTarget.transform.position, _speed * Time.deltaTime);
 
-    public void StopMove()
-    {
-        if (_isDead)
-        {
-            return;
-        }
+//            // Nếu đang chạy thì dừng chạy
+//            if (_isMoving)
+//            {
+//                _isMoving = false;
+//            }
+//        }
+//    }
 
-        // Dừng di chuyển
-        _isMoving = false;
+//    public void StopMove()
+//    {
+//        if (_isDead)
+//        {
+//            return;
+//        }
 
-        // Kiểm tra nếu đang tấn công thì dừng tấn công
-        if (_isAttack)
-        {
-            _isAttack = false;
-        }
+//        // Dừng di chuyển
+//        _isMoving = false;
 
-        // Bắn đạn
-        if (!_hasFired)
-        {
-            Attack();
-        }
-    }
+//        // Kiểm tra nếu đang tấn công thì dừng tấn công
+//        if (_isAttack)
+//        {
+//            _isAttack = false;
+//        }
 
-    private IEnumerator ResetFire()
-    {
-        yield return new WaitForSeconds(1f);
-        _hasFired = false;
-    }
-}
+//        // Bắn đạn
+//        if (!_hasFired)
+//        {
+//            Attack();
+//        }
+//    }
+
+//    private IEnumerator ResetFire()
+//    {
+//        yield return new WaitForSeconds(1f);
+//        _hasFired = false;
+//    }
+//}
