@@ -17,7 +17,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] protected Transform _currentTarget;
     //float
     [SerializeField] protected float _speed = 5f;
-    [SerializeField] public static float _attackRange = 4f;
+    [SerializeField] protected float _attackRange = 4f;
 
     //bool
     [SerializeField] protected bool _isMoving = false;

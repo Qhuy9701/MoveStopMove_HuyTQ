@@ -62,6 +62,14 @@ public class PlayerController : CharacterController
                 Attack(selectedWeapon);
                 // Debug
                 Debug.DrawLine(transform.position, botPosition, Color.red, 1f);
+                for (int i = 0; i <= 360; i += 10)
+                {
+                    float angle = i * Mathf.PI / 180;
+                    float x = Mathf.Sin(angle) * _attackRange;
+                    float z = Mathf.Cos(angle) * _attackRange;
+                    Vector3 pos = transform.position + new Vector3(x, 0, z);
+                    Debug.DrawLine(transform.position, pos, Color.yellow);
+                }
                 Debug.Log("Attack");
             }
 
