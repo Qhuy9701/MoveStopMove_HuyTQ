@@ -26,6 +26,7 @@ public class CharacterController : MonoBehaviour
 
     Bullet bullet;
 
+    public WeaponType selectedWeapon;
     public virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -97,5 +98,11 @@ public class CharacterController : MonoBehaviour
     {
         transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
         _attackRange += 0.5f;
-    }    
+    }  
+
+    public virtual void SelectWeapon(WeaponType weaponType)
+    {
+        selectedWeapon = weaponType;
+    }
+
 }

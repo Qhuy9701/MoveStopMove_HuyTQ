@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : CharacterController
 {
     [SerializeField] JoyStickMove joyStickMove;
-    private WeaponType selectedWeapon;
+    public GameObject attackrange;
 
     public void Start()
     {
@@ -77,8 +77,8 @@ public class PlayerController : CharacterController
         }
     }
 
-    public void SelectWeapon(WeaponType weapon)
+    public override void SelectWeapon(WeaponType weapon)
     {
-        selectedWeapon = weapon;
+        
     }
 }
