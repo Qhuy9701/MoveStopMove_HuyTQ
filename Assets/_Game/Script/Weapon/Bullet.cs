@@ -49,7 +49,6 @@ public class Bullet : MonoBehaviour
             characterController.Die();
 
             Invoke("Spawn", 1f);
-
         }
     }
 
@@ -57,6 +56,6 @@ public class Bullet : MonoBehaviour
     private void Spawn()
     {
         //ObjectPool.Instance.SpawnFromPool("Bot", characterSpawner.GetRandomPosition(), Quaternion.identity);
-        ObjectPool.Instance.ReturnToPool("Bullet", gameObject);
+        ObjectPool.Instance.ReturnToPool(Constants.TAG_BULLET, gameObject);
     }
 }

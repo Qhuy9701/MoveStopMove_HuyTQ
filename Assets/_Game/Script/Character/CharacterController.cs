@@ -2,9 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 
+public enum WeaponType
+{
+    Bullet,
+    Boomerang
+}
+
 public class CharacterController : MonoBehaviour
 {   
-    public SphereCollider attackRange;
     //tranform
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected Transform _attackPoint;
@@ -45,23 +50,43 @@ public class CharacterController : MonoBehaviour
         _isAttack = false;
         _isDead = false;
     }
-    public virtual void Attack()
+
+    public virtual void Attack(WeaponType weaponType)
     {
-        //GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, _attackPoint.position, _attackPoint.rotation);
-        GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOOMERANG, _attackPoint.position, _attackPoint.rotation);
-        if (bullet != null)
+        if (weaponType == WeaponType.Bullet)
         {
-            bullet.transform.position = _attackPoint.position;
-            bullet.transform.rotation = _attackPoint.rotation;
-            bullet.SetActive(true);
-            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * _speed;
+            GameObject bullet = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BULLET, _attackPoint.position, _attackPoint.rotation);
+            if (bullet != null)
+            {
+                bullet.transform.position = _attackPoint.position;
+                bullet.transform.rotation = _attackPoint.rotation;
+                bullet.SetActive(true);
+                bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * _speed;
+            }
+            else
+            {
+                Debug.Log("No available bullets in pool.");
+            }
         }
-        else
+        else if (weaponType == WeaponType.Boomerang)
         {
-            Debug.Log("No available bullets in pool.");
+            GameObject boomerang = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOOMERANG, _attackPoint.position, _attackPoint.rotation);
+            if (boomerang != null)
+            {
+                boomerang.transform.position = _attackPoint.position;
+                boomerang.transform.rotation = _attackPoint.rotation;
+                boomerang.SetActive(true);
+                boomerang.GetComponent<Boomerang>().SetCharacter(this);
+            }
+            else
+            {
+                Debug.Log("No available boomerangs in pool.");
+            }
         }
     }
+
     public virtual void Move() { }
+
     public virtual void Die() 
     { 
         _isDead = true;
@@ -72,6 +97,5 @@ public class CharacterController : MonoBehaviour
     {
         transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
         _attackRange += 0.5f;
-
     }    
 }

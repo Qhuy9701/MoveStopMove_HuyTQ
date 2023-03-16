@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : CharacterController
 {
     [SerializeField] JoyStickMove joyStickMove;
+    private WeaponType selectedWeapon;
 
     public void Start()
     {
@@ -21,11 +22,11 @@ public class PlayerController : CharacterController
 
     private void FixedUpdate()
     {
-        //enter button q attack
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Attack();
+            Attack(selectedWeapon);
         }
+
         Move();
     }
 
@@ -58,8 +59,8 @@ public class PlayerController : CharacterController
                 // Shoot at the closest Bot collider found
                 Vector3 shootDirection = (botPosition - transform.position).normalized;
                 _attackPoint.LookAt(botPosition);
-                Attack();
-                //Debug
+                Attack(selectedWeapon);
+                // Debug
                 Debug.DrawLine(transform.position, botPosition, Color.red, 1f);
                 Debug.Log("Attack");
             }
@@ -68,5 +69,8 @@ public class PlayerController : CharacterController
         }
     }
 
+    public void SelectWeapon(WeaponType weapon)
+    {
+        selectedWeapon = weapon;
+    }
 }
-

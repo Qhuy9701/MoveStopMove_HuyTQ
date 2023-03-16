@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85aa3a650795490419a1c66b4331bd15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: {fileID: 0}
+  attackRange: 5
   rb: {fileID: 2256224457881826137}
   _attackPoint: {fileID: 5303900510550337225}
   _currentTarget: {fileID: 0}
