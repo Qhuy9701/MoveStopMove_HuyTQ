@@ -43,14 +43,14 @@ public class CharacterSpawner : MonoBehaviour
                 GameObject spawnPosition = GetRandomSpawnPosition();
                 if (!IsPositionOccupied(spawnPosition.transform.position))
                 {
-                    GameObject bot = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOT, spawnPosition.transform.position, Quaternion.identity);
+                    GameObject bot = ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOT, spawnPosition.transform.position, Quaternion.identity);                 
                     if (bot != null)
                     {
                         bot.SetActive(true);
-                        AddCharacter(bot);
-                        bot.name = "Bot" + i;
+                        AddCharacter(bot);                   
                         spawned = true;
                     }
+                    bot.name = "Bot" + i;
                 }
             }
         }

@@ -101,18 +101,16 @@ public class BotAI : CharacterController
        if (!_hasFired)
        {
            Attack(selectedWeapon);
+            //Debug
+            Debug.Log("Bot has fired!");
        }
    }
 
-   private IEnumerator ResetFire()
-   {
-       yield return new WaitForSeconds(1f);
-       _hasFired = false;
-   }
-
-
-    public override void SelectWeapon(WeaponType weapon)
+    private IEnumerator ResetFire()
     {
-        
+        yield return new WaitForSeconds(1f);
+        _hasFired = false;
     }
+
+
 }

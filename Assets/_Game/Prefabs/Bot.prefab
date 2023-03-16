@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 139880145089519271}
   - component: {fileID: 2312022033644262149}
   - component: {fileID: 3598945627681317454}
+  - component: {fileID: 4270142553252600392}
   m_Layer: 3
   m_Name: Bot
   m_TagString: Bot
@@ -193,3 +194,24 @@ MonoBehaviour:
   _isAttack: 0
   selectedWeapon: 0
   characters: []
+--- !u!114 &4270142553252600392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059163434843751535}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74e5188cf9bb8643b56e5dd7c6ce51d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 139880145089519271}
+  _attackPoint: {fileID: 8246224105405854942}
+  _currentTarget: {fileID: 0}
+  _speed: 20
+  _attackRange: 4
+  _isMoving: 0
+  _isDead: 0
+  _isAttack: 0
+  selectedWeapon: 0

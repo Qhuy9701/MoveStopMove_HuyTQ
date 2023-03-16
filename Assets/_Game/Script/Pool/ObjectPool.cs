@@ -57,9 +57,6 @@ public class ObjectPool : Singleton<ObjectPool>
         {
             pooledObject.OnObjectSpawn();
         }
-
-        //poolDictionary[tag].Enqueue(objectToSpawn);
-
         return objectToSpawn;
     }
 
