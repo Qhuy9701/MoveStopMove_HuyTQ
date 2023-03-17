@@ -9,7 +9,6 @@ public class Bullet : MonoBehaviour
     CharacterSpawner characterSpawner;
     CharacterController characterController;
     private Rigidbody rb;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -50,7 +49,7 @@ public class Bullet : MonoBehaviour
 
             // Gán lại giá trị mới cho characterSpawner
             characterSpawner = FindObjectOfType<CharacterSpawner>();
-
+            
             Invoke("Spawn", 1f);
         }
     }
@@ -62,7 +61,6 @@ public class Bullet : MonoBehaviour
         {
             ObjectPool.Instance.SpawnFromPool(Constants.TAG_BOT, characterSpawner.GetRandomPosition(), Quaternion.identity);
         }
-        ObjectPool.Instance.ReturnToPool(Constants.TAG_BULLET, gameObject);
     }
 
 }

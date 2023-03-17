@@ -97,7 +97,7 @@ public class CharacterController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public virtual void UpSize()
+    public void UpSize()
     {
         transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
         _attackRange += 0.5f;

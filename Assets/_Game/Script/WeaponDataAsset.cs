@@ -12,8 +12,6 @@ public class WeaponDataAsset : ScriptableObject
     {
         return lst.Find(x => x.type == type).weaponObj;
     }
-
-
 }
 
 [Serializable]
