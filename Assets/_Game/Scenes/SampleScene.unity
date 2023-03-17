@@ -3794,7 +3794,7 @@ MonoBehaviour:
     size: 1
   - tag: Bot
     prefab: {fileID: 8059163434843751535, guid: d89e65e5ec15fce40b0368bd57725e83, type: 3}
-    size: 20
+    size: 10
   - tag: Bullet
     prefab: {fileID: 3779583755522250003, guid: aba141932ccbecb46bec43860a236243, type: 3}
     size: 20
