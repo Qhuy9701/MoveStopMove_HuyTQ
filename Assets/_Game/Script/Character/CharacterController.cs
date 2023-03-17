@@ -24,8 +24,10 @@ public class CharacterController : MonoBehaviour
     [SerializeField] protected bool _isDead = false;
     [SerializeField] protected bool _isAttack = false;
 
+    public WeaponDataAsset weaponDataAsset;
     Bullet bullet;
 
+    
     public WeaponType selectedWeapon;
     public virtual void Awake()
     {
@@ -44,6 +46,7 @@ public class CharacterController : MonoBehaviour
             }
         }
     }
+
 
     public virtual void OnInit()
     {

@@ -105,12 +105,4 @@ public class BotAI : CharacterController
             Debug.Log("Bot has fired!");
        }
    }
-
-    private IEnumerator ResetFire()
-    {
-        yield return new WaitForSeconds(1f);
-        _hasFired = false;
-    }
-
-
 }

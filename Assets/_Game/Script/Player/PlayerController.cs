@@ -69,6 +69,8 @@ public class PlayerController : CharacterController
                     float z = Mathf.Cos(angle) * _attackRange;
                     Vector3 pos = transform.position + new Vector3(x, 0, z);
                     Debug.DrawLine(transform.position, pos, Color.yellow);
+
+                    weaponDataAsset.GetWeaponByTpe(selectedWeapon);
                 }
                 Debug.Log("Attack");
             }

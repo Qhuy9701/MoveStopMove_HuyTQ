@@ -130,4 +130,5 @@ public class CharacterSpawner : MonoBehaviour
         character.SetActive(true);
         ObjectPool.Instance.ReturnToPool("Bot", character);
     }
+
 }

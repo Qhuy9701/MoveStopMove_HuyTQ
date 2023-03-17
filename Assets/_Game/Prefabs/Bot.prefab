@@ -192,6 +192,7 @@ MonoBehaviour:
   _isMoving: 0
   _isDead: 0
   _isAttack: 0
+  weaponDataAsset: {fileID: 0}
   selectedWeapon: 0
   characters: []
 --- !u!114 &4270142553252600392
@@ -214,4 +215,5 @@ MonoBehaviour:
   _isMoving: 0
   _isDead: 0
   _isAttack: 0
+  weaponDataAsset: {fileID: 11400000, guid: b320d9c7d2fde3c4fb450b700e474611, type: 2}
   selectedWeapon: 0

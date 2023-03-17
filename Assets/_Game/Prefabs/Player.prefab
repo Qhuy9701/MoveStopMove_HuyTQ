@@ -269,6 +269,7 @@ MonoBehaviour:
   _isMoving: 0
   _isDead: 0
   _isAttack: 0
+  weaponDataAsset: {fileID: 11400000, guid: b320d9c7d2fde3c4fb450b700e474611, type: 2}
   selectedWeapon: 0
   joyStickMove: {fileID: 2256224457881826117}
   attackrange: {fileID: 0}
