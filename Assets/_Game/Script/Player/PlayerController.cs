@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,13 +6,9 @@ public class PlayerController : CharacterController
 {
     [SerializeField] JoyStickMove joyStickMove;
     public GameObject attackrange;
-
     public void Start()
     {
-        if (joyStickMove == null)
-        {
-            joyStickMove = FindObjectOfType<JoyStickMove>();
-        }
+
     }
 
     public override void OnInit()
@@ -83,4 +79,5 @@ public class PlayerController : CharacterController
     {
         
     }
+
 }

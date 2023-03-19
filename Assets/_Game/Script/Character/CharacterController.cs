@@ -9,15 +9,16 @@ public enum WeaponType
 }
 
 public class CharacterController : MonoBehaviour
-{   
+{
+    [SerializeField] protected Animator animator; 
+    
     //tranform
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected Transform _attackPoint;
     public Transform AttackPoint => _attackPoint;
-    [SerializeField] protected Transform _currentTarget;
     //float
-    [SerializeField] protected float _speed = 5f;
-    [SerializeField] protected float _attackRange = 4f;
+    [SerializeField] protected float _attackRange = 30f;
+    public float _speed = 5f;
 
     //bool
     [SerializeField] protected bool _isMoving = false;
@@ -31,6 +32,7 @@ public class CharacterController : MonoBehaviour
     public WeaponType selectedWeapon;
     public virtual void Awake()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         if (_attackPoint == null)
         {
@@ -71,6 +73,8 @@ public class CharacterController : MonoBehaviour
             {
                 Debug.Log("No available bullets in pool.");
             }
+            //set trigger attack
+            animator.SetTrigger("Attack");
         }
         else if (weaponType == WeaponType.Boomerang)
         {
@@ -86,6 +90,7 @@ public class CharacterController : MonoBehaviour
             {
                 Debug.Log("No available boomerangs in pool.");
             }
+            animator.SetTrigger("Attack");
         }
     }
 
